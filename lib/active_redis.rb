@@ -1,7 +1,10 @@
 require "active_redis/version"
 
+require "active_redis/railtie" if defined?(Rails)
+
 module ActiveRedis
-  autoload :Config, 'active_redis/config'
+  autoload :Config,      'active_redis/config'
+  autoload :Base,        'active_redis/base'
 
   def self.config(&block)
     @config ||= ::ActiveRedis::Config.new

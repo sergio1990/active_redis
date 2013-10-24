@@ -1,24 +1,24 @@
 module ActiveRedis
-	module Associations
+  module Associations
 
-		def self.included(base)
-			base.extend ClassMethods
-		end
+    def self.included(base)
+      base.extend ClassMethods
+    end
 
-		module ClassMethods
+    module ClassMethods
 
-			def has_one
+      def has_one
 
-			end
+      end
 
-			def has_many
+      def has_many
 
-			end
+      end
 
-			def belongs_to
+      def belongs_to
 
-			end
+      end
 
-		end
-	end
+    end
+  end
 end

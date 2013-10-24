@@ -1,7 +1,11 @@
+require 'active_redis/attributes'
+require 'active_redis/associations'
+
 module ActiveRedis
-	class Base
+  class Base
 
-		include Associations
+    include Attributes
+    include Associations
 
-	end
+  end
 end

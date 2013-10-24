@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = ActiveRedis::VERSION
   spec.authors       = ["Sergey Gernyak"]
   spec.email         = ["sergeg1990@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Small childly ORM for Redis}
+  spec.summary       = spec.description
   spec.homepage      = ""
   spec.license       = "MIT"
 
