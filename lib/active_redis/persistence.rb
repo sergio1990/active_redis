@@ -5,9 +5,13 @@ module ActiveRedis
       base.extend ClassMethods
     end
 
+    def initialize(attrs)
+      binding.pry
+      attrs.each { |attribute, value| self.send("#{attribute}=", value) }
+    end
+
     def save
-      attrs = prepare_hash
-      ActiveRedis.connection.save_table self.class.table_name(attrs[:id]), attrs.flatten
+      ActiveRedis.connection.save_table self.class, prepare_hash
     end
 
     private
@@ -25,8 +29,10 @@ module ActiveRedis
 
     module ClassMethods
 
-      def create(*attrs)
-
+      def create(attrs)
+        self.class.new(attrs).tap do |model|
+          model.save
+        end
       end
 
     end

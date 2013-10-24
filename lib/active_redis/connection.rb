@@ -26,8 +26,13 @@ module ActiveRedis
     	adapter.hmset model.info_table_name, "next_id", 0
     end
 
-    def save_table(table, attributes)
-    	adapter.hmset table, attributes
+    def save_table(model, attributes)
+    	raise ActiveRedis::NotSpecifiedID, "Must specified ID for saving record!" if !attributes || !attributes[:id]
+    	adapter.hmset model.table_name(attributes[:id]), attributes.flatten
+    end
+
+    def fetch_row(model, id)
+    	adapter.hgetall model.table_name(id)
     end
 
   end
