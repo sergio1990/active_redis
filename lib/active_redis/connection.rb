@@ -9,5 +9,9 @@ module ActiveRedis
       super(redis)
     end
 
+    def count_key(key)
+    	__getobj__.eval "return #redis.call('keys', '#{key}*')"
+    end
+
   end
 end

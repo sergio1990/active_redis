@@ -8,7 +8,8 @@ module ActiveRedis
     module ClassMethods
 
       def attributes(*attrs)
-        attrs.concat([:id, :created_at]).each do |attribute|
+        attrs = attrs.concat([:id, :created_at])
+        attrs.each do |attribute|
           define_method "#{attribute}=" do |value|
             instance_variable_set("@#{attribute}", value)
           end
@@ -16,6 +17,10 @@ module ActiveRedis
             instance_variable_get("@#{attribute}")
           end
         end
+        class << self
+          attr_accessor :defined_attributes
+        end
+        self.defined_attributes = attrs
       end
 
     end
