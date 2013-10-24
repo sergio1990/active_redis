@@ -6,7 +6,8 @@ module ActiveRedis
     end
 
     def save
-      binding.pry
+      attrs = prepare_hash
+      ActiveRedis.connection.save_table self.class.table_name(attrs[:id]), attrs.flatten
     end
 
     private
@@ -15,12 +16,16 @@ module ActiveRedis
         self.class.defined_attributes.inject({}) do |hash, attribute|
           hash[attribute] = self.send("#{attribute}")
           hash
-        end.flatten
+        end.tap do |hash|
+          hash[:id] ||= ActiveRedis.connection.next_id(self.class)
+          hash[:created_at] ||= Time.now.to_i
+          hash[:updated_at] = Time.now.to_i
+        end
       end
 
     module ClassMethods
 
-      def create
+      def create(*attrs)
 
       end
 

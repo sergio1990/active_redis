@@ -1,5 +1,5 @@
 require "active_redis/version"
-
+require "active_redis/errors"
 require "active_redis/railtie" if defined?(Rails)
 
 module ActiveRedis
@@ -13,6 +13,7 @@ module ActiveRedis
   end
 
   def self.connection
+    raise ActiveRedis::NoConnectionError, "Connection not provided!" unless @connection
     @connection
   end
 
