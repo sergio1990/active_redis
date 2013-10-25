@@ -15,5 +15,9 @@ module ActiveRedis
       ActiveRedis.connection.calculate_min self, attribute
     end
 
+    def sum(attribute)
+      ActiveRedis.connection.calculate_sum self, attribute
+    end
+
   end
 end

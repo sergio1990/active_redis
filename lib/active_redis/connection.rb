@@ -45,5 +45,9 @@ module ActiveRedis
       @adapter.eval min_script, keys: [model.key_name], argv: [attribute]
     end
 
+    def calculate_sum(model, attribute)
+      @adapter.eval sum_script, keys: [model.key_name], argv: [attribute]
+    end
+
   end
 end

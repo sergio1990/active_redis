@@ -37,6 +37,18 @@ module ActiveRedis
         MAX
       end
 
+      def sum_script
+        return <<-MAX
+          local result = {}
+          local keys = redis.call("KEYS", KEYS[1])
+          local sum = 0
+          for index, key in pairs(keys) do
+            sum += tonumber(redis.call("HGET", key, ARGV[1]))
+          end
+          return sum
+        MAX
+      end
+
     end
   end
 end
