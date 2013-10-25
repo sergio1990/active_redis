@@ -2,6 +2,12 @@ module ActiveRedis
   module Helpers
     module LuaScripts
 
+      def count_script
+        return <<-COUNT
+          return #redis.call('keys', KEYS[1])
+        COUNT
+      end
+
       def pluck_script
         return <<-PLUCK
           local result = {}

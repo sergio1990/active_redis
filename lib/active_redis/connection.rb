@@ -30,7 +30,7 @@ module ActiveRedis
     end
 
     def calculate_count(model)
-      @adapter.eval "return #redis.call('keys', '#{model.key_name}')"
+      @adapter.eval count_script, keys: [model.key_name]
     end
 
     def calculate_pluck(model, attribute)
