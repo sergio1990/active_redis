@@ -11,5 +11,9 @@ module ActiveRedis
       ActiveRedis.connection.calculate_max self, attribute
     end
 
+    def min(attribute)
+      ActiveRedis.connection.calculate_min self, attribute
+    end
+
   end
 end

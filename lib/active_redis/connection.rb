@@ -41,5 +41,9 @@ module ActiveRedis
       @adapter.eval max_script, keys: [model.key_name], argv: [attribute]
     end
 
+    def calculate_min(model, attribute)
+      @adapter.eval min_script, keys: [model.key_name], argv: [attribute]
+    end
+
   end
 end

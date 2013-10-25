@@ -25,6 +25,18 @@ module ActiveRedis
         MAX
       end
 
+      def min_script
+        return <<-MAX
+          local result = {}
+          local keys = redis.call("KEYS", KEYS[1])
+          for index, key in pairs(keys) do
+            table.insert(result, tonumber(redis.call("HGET", key, ARGV[1])))
+          end
+          table.sort(result)
+          return result[1]
+        MAX
+      end
+
     end
   end
 end
