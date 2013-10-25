@@ -2,57 +2,21 @@ module ActiveRedis
   module Helpers
     module LuaScripts
 
-      def count_script
-        return <<-COUNT
-          return #redis.call('keys', KEYS[1])
-        COUNT
+      %w{count pluck min max sum}.each do |method|
+        define_method "#{method}_script" do
+          <<-LUA
+            #{LuaLoader.get_main}
+            return calculate_#{method}(KEYS[1]#{method == "count" ? "" : ", ARGV[1]"})
+          LUA
+        end
       end
 
-      def pluck_script
-        return <<-PLUCK
-          local result = {}
-          local keys = redis.call("KEYS", KEYS[1])
-          for index, key in pairs(keys) do
-            table.insert(result, redis.call("HGET", key, ARGV[1]))
-          end
-          return result
-        PLUCK
-      end
+      class LuaLoader
 
-      def max_script
-        return <<-MAX
-          local result = {}
-          local keys = redis.call("KEYS", KEYS[1])
-          for index, key in pairs(keys) do
-            table.insert(result, tonumber(redis.call("HGET", key, ARGV[1])))
-          end
-          table.sort(result)
-          return result[#result]
-        MAX
-      end
+        def self.get_main
+          @content ||= File.read(File.dirname(__FILE__) + '/../lua_scripts/main.lua')
+        end
 
-      def min_script
-        return <<-MAX
-          local result = {}
-          local keys = redis.call("KEYS", KEYS[1])
-          for index, key in pairs(keys) do
-            table.insert(result, tonumber(redis.call("HGET", key, ARGV[1])))
-          end
-          table.sort(result)
-          return result[1]
-        MAX
-      end
-
-      def sum_script
-        return <<-MAX
-          local result = {}
-          local keys = redis.call("KEYS", KEYS[1])
-          local sum = 0
-          for index, key in pairs(keys) do
-            sum = sum + tonumber(redis.call("HGET", key, ARGV[1]))
-          end
-          return sum
-        MAX
       end
 
     end
