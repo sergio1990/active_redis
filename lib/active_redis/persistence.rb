@@ -6,7 +6,6 @@ module ActiveRedis
     end
 
     def initialize(attrs)
-      binding.pry
       attrs.each { |attribute, value| self.send("#{attribute}=", value) }
     end
 
