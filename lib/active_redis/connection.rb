@@ -1,13 +1,16 @@
 require 'active_redis/helpers/lua_scripts'
-
+Dir[File.dirname(__FILE__) + '/connection_ext/*.rb'].each {|file| require file }
 include ActiveRedis::Helpers::LuaScripts
 
 module ActiveRedis
   class Connection
+    extend ActiveRedis::ConnectionExt::Calculations
 
     def initialize(options, adapter)
       @adapter = adapter.new(options)
     end
+
+    calculations :count, :pluck, :max, :min, :sum
 
     def next_id(model)
       table = model.info_table_name
@@ -27,26 +30,6 @@ module ActiveRedis
 
     def fetch_row(model, id)
       @adapter.hgetall model.table_name(id)
-    end
-
-    def calculate_count(model)
-      @adapter.eval count_script, keys: [model.key_name]
-    end
-
-    def calculate_pluck(model, attribute)
-      @adapter.eval pluck_script, keys: [model.key_name], argv: [attribute]
-    end
-
-    def calculate_max(model, attribute)
-      @adapter.eval max_script, keys: [model.key_name], argv: [attribute]
-    end
-
-    def calculate_min(model, attribute)
-      @adapter.eval min_script, keys: [model.key_name], argv: [attribute]
-    end
-
-    def calculate_sum(model, attribute)
-      @adapter.eval sum_script, keys: [model.key_name], argv: [attribute]
     end
 
   end
