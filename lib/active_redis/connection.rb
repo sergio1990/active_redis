@@ -34,7 +34,11 @@ module ActiveRedis
     end
 
     def fetch_all_with_attribute(model, attribute)
-      @adapter.eval pluck_script, keys: ["#{model.table_name}*"], argv: [attribute]
+      @adapter.eval pluck_script, keys: [model.key_name], argv: [attribute]
+    end
+
+    def calculate_max(model, attribute)
+      @adapter.eval max_script, keys: [model.key_name], argv: [attribute]
     end
 
   end

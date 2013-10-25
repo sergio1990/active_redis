@@ -1,11 +1,15 @@
 module ActiveRedis
-	module Calculations
+  module Calculations
 
-		def count
-			ActiveRedis.connection.count_key table_name
-		end
+    def count
+      ActiveRedis.connection.count_key table_name
+    end
 
-		# TODO: add same average, min, max, sum methods
+    # TODO: add same average, min, max, sum methods
 
-	end
+    def max(attribute)
+      ActiveRedis.connection.calculate_max self, attribute
+    end
+
+  end
 end
