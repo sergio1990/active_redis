@@ -35,6 +35,8 @@ module ActiveRedis
         end
       end
 
+      # TODO: add functionality for update_attribute and update_attributes methods like ActiveRecord
+
     end
 
   end

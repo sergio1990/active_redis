@@ -7,14 +7,17 @@ module ActiveRedis
 
     module ClassMethods
 
+      # TODO: add has_one functionality
       def has_one
 
       end
 
+      # TODO: add has_many functionality
       def has_many
 
       end
 
+      # TODO: add belongs_to functionality
       def belongs_to
 
       end
