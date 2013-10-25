@@ -1,3 +1,7 @@
+require 'active_redis/helpers/lua_scripts'
+
+include ActiveRedis::Helpers::LuaScripts
+
 module ActiveRedis
   class Connection
 
@@ -6,27 +10,31 @@ module ActiveRedis
     end
 
     def count_key(key)
-    	@adapter.eval "return #redis.call('keys', '#{key}*')"
+      @adapter.eval "return #redis.call('keys', '#{key}*')"
     end
 
     def next_id(model)
-    	table = model.info_table_name
-    	create_info_table(model) unless @adapter.exists(table)
-    	@adapter.hincrby table, "next_id", 1
-    	@adapter.hget table, "next_id"
+      table = model.info_table_name
+      create_info_table(model) unless @adapter.exists(table)
+      @adapter.hincrby table, "next_id", 1
+      @adapter.hget table, "next_id"
     end
 
     def create_info_table(model)
-    	@adapter.hmset model.info_table_name, "next_id", 0
+      @adapter.hmset model.info_table_name, "next_id", 0
     end
 
     def save_table(model, attributes)
-    	raise ActiveRedis::NotSpecifiedID, "Must specified ID for saving record!" if !attributes || !attributes[:id]
-    	@adapter.hmset model.table_name(attributes[:id]), attributes.flatten
+      raise ActiveRedis::NotSpecifiedID, "Must specified ID for saving record!" if !attributes || !attributes[:id]
+      @adapter.hmset model.table_name(attributes[:id]), attributes.flatten
     end
 
     def fetch_row(model, id)
-    	@adapter.hgetall model.table_name(id)
+      @adapter.hgetall model.table_name(id)
+    end
+
+    def fetch_all_with_attribute(model, attribute)
+      @adapter.eval pluck_script, keys: ["#{model.table_name}*"], argv: [attribute]
     end
 
   end
