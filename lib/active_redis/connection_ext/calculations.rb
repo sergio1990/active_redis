@@ -7,7 +7,7 @@ module ActiveRedis::ConnectionExt
 
     module ClassMethods
 
-      def calculations(*methods)
+      def calculations(methods)
         eval_string = ""
         methods.each do |method|
           eval_string += <<-EVAL

@@ -10,7 +10,7 @@ module ActiveRedis
       @adapter = adapter.new(options)
     end
 
-    calculations :count, :pluck, :max, :min, :sum
+    calculations ActiveRedis::Constants::CALCULATION_METHODS
 
     def next_id(model)
       table = model.info_table_name

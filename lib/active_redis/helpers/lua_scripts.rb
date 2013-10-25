@@ -2,7 +2,7 @@ module ActiveRedis
   module Helpers
     module LuaScripts
 
-      %w{count pluck min max sum}.each do |method|
+      ActiveRedis::Constants::CALCULATION_METHODS.each do |method|
         define_method "#{method}_script" do
           <<-LUA
             #{LuaLoader.get_main}
