@@ -9,10 +9,6 @@ module ActiveRedis
       @adapter = adapter.new(options)
     end
 
-    def count_key(key)
-      @adapter.eval "return #redis.call('keys', '#{key}*')"
-    end
-
     def next_id(model)
       table = model.info_table_name
       create_info_table(model) unless @adapter.exists(table)
@@ -33,7 +29,11 @@ module ActiveRedis
       @adapter.hgetall model.table_name(id)
     end
 
-    def fetch_all_with_attribute(model, attribute)
+    def calculate_count(model)
+      @adapter.eval "return #redis.call('keys', '#{model.key_name}')"
+    end
+
+    def calculate_pluck(model, attribute)
       @adapter.eval pluck_script, keys: [model.key_name], argv: [attribute]
     end
 
