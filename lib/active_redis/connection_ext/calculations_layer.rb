@@ -1,5 +1,5 @@
 module ActiveRedis::ConnectionExt
-  module Calculations
+  module CalculationsLayer
 
     def self.extended(base)
       base.extend ClassMethods
