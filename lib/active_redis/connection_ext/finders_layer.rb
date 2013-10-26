@@ -6,5 +6,9 @@ module ActiveRedis::ConnectionExt
       adapter.hgetall model.table_name(id)
     end
 
+    def fetch_keys(model)
+      adapter.keys model.key_name
+    end
+
   end
 end

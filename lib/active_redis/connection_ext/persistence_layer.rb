@@ -17,5 +17,19 @@ module ActiveRedis::ConnectionExt
       adapter.hmset model.info_table_name, "next_id", 0
     end
 
+    def destroy(model, id)
+      raise ActiveRedis::NotSpecifiedIdError, "Must specified ID for destroy record!" unless id
+      destroy_by_keys model.table_name(id)
+    end
+
+    def destroy_all(model)
+      destroy_by_keys fetch_keys(model)
+    end
+
+    private
+    def destroy_by_keys(keys)
+      adapter.del keys
+    end
+
   end
 end

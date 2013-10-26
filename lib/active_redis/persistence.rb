@@ -5,12 +5,16 @@ module ActiveRedis
       base.extend ClassMethods
     end
 
-    def initialize(attrs)
+    def initialize(attrs = {})
       attrs.each { |attribute, value| self.send("#{attribute}=", value) }
     end
 
     def save
       ActiveRedis.connection.save_table self.class, prepare_hash
+    end
+
+    def destroy
+      ActiveRedis.connection.destroy self.class, self.id
     end
 
     private
@@ -28,10 +32,14 @@ module ActiveRedis
 
     module ClassMethods
 
-      def create(attrs)
+      def create(attrs = {})
         self.class.new(attrs).tap do |model|
           model.save
         end
+      end
+
+      def destroy_all
+        ActiveRedis.connection.destroy_all self
       end
 
       # TODO: add functionality for update_attribute and update_attributes methods like ActiveRecord
