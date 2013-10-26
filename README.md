@@ -54,7 +54,7 @@ p article.link # => http://someblog.com/1
 
 ### Persistence
 
-ActiveRedis::Base inherited model respond to all CRUD method such create, update, destroy and save
+ActiveRedis::Base inherited model respond to all CRUD method such as create, update, destroy and save
 
 ```ruby
 article = Article.new(title: "Some title", link: "http://someblog.com/1")
@@ -82,6 +82,7 @@ Now gem add support for some aggregation functions like __sum__, __min__, __max_
 ### Future work
 
 At an early time I want to implement such features:
+
 1. Add finders like ActiveRecord's where
 2. Add _all_ class method
 3. Add associations
