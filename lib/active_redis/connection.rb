@@ -12,6 +12,8 @@ module ActiveRedis
 
     calculations ActiveRedis::Constants::CALCULATION_METHODS
 
+    # TODO: Move methods to it's layers extensions
+
     def next_id(model)
       table = model.info_table_name
       create_info_table(model) unless @adapter.exists(table)
