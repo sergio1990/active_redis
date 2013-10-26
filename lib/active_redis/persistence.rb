@@ -6,7 +6,7 @@ module ActiveRedis
     end
 
     def initialize(attrs = {})
-      attrs.each { |attribute, value| self.send("#{attribute}=", value) }
+      self.attributes = attrs
     end
 
     def save
@@ -15,6 +15,11 @@ module ActiveRedis
 
     def destroy
       ActiveRedis.connection.destroy self.class, self.id
+    end
+
+    def update(attrs = {})
+      self.attributes = attrs
+      self.save
     end
 
     private
@@ -41,8 +46,6 @@ module ActiveRedis
       def destroy_all
         ActiveRedis.connection.destroy_all self
       end
-
-      # TODO: add functionality for update_attribute and update_attributes methods like ActiveRecord
 
     end
 

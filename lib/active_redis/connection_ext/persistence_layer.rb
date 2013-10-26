@@ -3,7 +3,7 @@ module ActiveRedis::ConnectionExt
 
     def save_table(model, attributes)
       raise ActiveRedis::NotSpecifiedIdError, "Must specified ID for saving record!" if !attributes || !attributes[:id]
-      adapter.hmset model.table_name(attributes[:id]), attributes.flatten
+      adapter.hmset(model.table_name(attributes[:id]), attributes.flatten) == ActiveRedis::Constants::SAVE_SUCCESS_ANSWER
     end
 
     def next_id(model)
