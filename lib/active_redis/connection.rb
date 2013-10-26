@@ -16,5 +16,7 @@ module ActiveRedis
       @adapter = adapter.new(options)
     end
 
+    attr_accessor :adapter
+
   end
 end
