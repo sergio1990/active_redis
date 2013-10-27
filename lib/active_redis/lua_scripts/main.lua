@@ -48,3 +48,25 @@ local calculate_sum = function (key, attr)
   end
   return sum
 end
+
+local is_match_record = function (key, argv)
+  for i = 1, #argv, 2 do
+    local k = argv[i]
+    local value = argv[i+1]
+    if (redis.call("HGET", key, k) ~= value) then
+      return false
+    end
+  end
+  return true
+end
+
+local where_finder = function (key, argv)
+  local result = {}
+  local ks = keys(key)
+  for index, k in pairs(ks) do
+    if is_match_record(k, argv) == true then
+      table.insert(result, redis.call("HGETALL", k))
+    end
+  end
+  return result
+end
