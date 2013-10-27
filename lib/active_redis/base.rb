@@ -5,6 +5,8 @@ require 'active_redis/naming'
 require 'active_redis/calculations'
 require 'active_redis/finders'
 
+# TODO: Add Expiring module
+
 module ActiveRedis
   class Base
     extend Naming

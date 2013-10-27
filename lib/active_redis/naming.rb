@@ -1,15 +1,19 @@
 module ActiveRedis
 
-	module Naming
+  module Naming
 
-		def table_name(id = "")
-			"#{self.name.downcase.pluralize}:item:#{id}"
-		end
+    def table_name(id = "")
+      "#{self.name.downcase.pluralize}:item:#{id}"
+    end
 
-		def info_table_name
-			"#{self.name.downcase.pluralize}:info"
-		end
+    def key_name
+      "#{table_name}*"
+    end
 
-	end
+    def info_table_name
+      "#{self.name.downcase.pluralize}:info"
+    end
+
+  end
 
 end

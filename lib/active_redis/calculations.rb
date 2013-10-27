@@ -1,9 +1,17 @@
 module ActiveRedis
-	module Calculations
+  module Calculations
 
-		def count
-			ActiveRedis.connection.count_key table_name
-		end
+    def self.extended(base)
+      ActiveRedis::Constants::CALCULATION_METHODS.each do |method|
+        base.instance_eval <<-EVAL
+          def #{method}(attribute = "")
+            ActiveRedis.connection.calculate_#{method} self, attribute
+          end
+        EVAL
+      end
+    end
 
-	end
+    # TODO: add average method
+
+  end
 end

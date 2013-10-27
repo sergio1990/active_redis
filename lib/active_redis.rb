@@ -3,6 +3,7 @@ require "active_redis/errors"
 require "active_redis/railtie" if defined?(Rails)
 
 module ActiveRedis
+  autoload :Constants,   'active_redis/constants'
   autoload :Config,      'active_redis/config'
   autoload :Base,        'active_redis/base'
   autoload :Connection,  'active_redis/connection'
