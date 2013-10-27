@@ -86,6 +86,7 @@ At an early time I want to implement such features:
 1. Add finders like ActiveRecord's where
 2. Add _all_ class method
 3. Add associations
+4. Setting/getting attributes with it's types
 
 ## Contributing
 
