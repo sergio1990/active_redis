@@ -11,6 +11,13 @@ module ActiveRedis
         end
       end
 
+      def where_script
+        <<-LUA
+          #{LuaLoader.get_main}
+          return where_finder(KEYS[1], ARGV)
+        LUA
+      end
+
       class LuaLoader
 
         def self.get_main

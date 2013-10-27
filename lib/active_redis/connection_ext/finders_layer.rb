@@ -10,5 +10,9 @@ module ActiveRedis::ConnectionExt
       adapter.keys model.key_name
     end
 
+    def fetch_where(model, params)
+      adapter.eval where_script, keys: [model.key_name], argv: params.flatten
+    end
+
   end
 end

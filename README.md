@@ -67,26 +67,51 @@ article.update(title: "New article title") # => true
 p article.title # => New article title
 
 another_article.destroy
+
+Article.destroy_all
+
+p Article.count # => 0
 ```
 
 ### Finders and Calculations
 
-Now you may find 'row' by it's id
+You may find 'row' by it's id
 
 ```ruby
 Article.find(1) # => [#<Article:0x007fec2526f4f8 @updated_at="1382608780", @link="http://someblog.com/1", @id="1", @title="Some title", @created_at="1382608780">]
 ```
 
-Now gem add support for some aggregation functions like __sum__, __min__, __max__, __pluck__.
+Also gem add support for some aggregation functions like __sum__, __min__, __max__, __pluck__
+
+```ruby
+class Article < ActiveRedis::Base
+  attributes :link, :title, :views
+end
+
+Article.create(views: 1000, link: "http://someblog.com/1", title: "Title article")
+Article.create(views: 3000, link: "http://someblog.com/2", title: "Title article")
+
+Article.sum(:views)    # => 4000
+Article.min(:views)    # => 1000
+Article.max(:views)    # => 3000
+Article.pluck(:id)     # => ["1", "2"]
+```
+
+From version 0.0.2 you are able to search item by multiple attributes using method __where__
+
+```ruby
+Article.where(title: "Title article", views: 1000)
+```
 
 ### Future work
 
 At an early time I want to implement such features:
 
-1. Add finders like ActiveRecord's where
-2. Add _all_ class method
-3. Add associations
-4. Setting/getting attributes with it's types
+1. Add _all_ class method
+2. Implement Association module
+3. Setting/getting attributes with it's types
+4. Relational Operators in where
+5. Scopes???
 
 ## Contributing
 
