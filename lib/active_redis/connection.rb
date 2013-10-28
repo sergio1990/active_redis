@@ -19,5 +19,11 @@ module ActiveRedis
 
     attr_accessor :adapter
 
+    private
+
+    def run_eval(type, keys = [], argv = [])
+      adapter.eval send("#{type}_script"), keys: keys, argv: argv
+    end
+
   end
 end

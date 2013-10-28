@@ -12,7 +12,7 @@ module ActiveRedis::ConnectionExt
         methods.each do |method|
           eval_string += <<-EVAL
             def calculate_#{method}(model, attributes = "")
-              adapter.eval send("#{method}_script"), keys: [model.key_name], argv: [attributes]
+              run_eval :#{method}, [model.key_name], [attributes]
             end
           EVAL
         end
