@@ -6,7 +6,7 @@ module ActiveRedis
     end
 
     def initialize(attrs = {})
-      self.attributes = Hash[*attrs]
+      self.attributes = attrs
     end
 
     def save

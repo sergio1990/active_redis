@@ -1,3 +1,5 @@
+require 'active_redis/constants'
+
 module ActiveRedis
   module Helpers
     module LuaScripts

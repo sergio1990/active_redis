@@ -9,6 +9,7 @@ module ActiveRedis
 
     include ActiveRedis::ConnectionExt::FindersLayer
     include ActiveRedis::ConnectionExt::PersistenceLayer
+    include ActiveRedis::ConnectionExt::ScriptsLayer
 
     calculations ActiveRedis::Constants::CALCULATION_METHODS
 
@@ -17,6 +18,12 @@ module ActiveRedis
     end
 
     attr_accessor :adapter
+
+    private
+
+    def run_eval(type, keys = [], argv = [])
+      adapter.eval send("#{type}_script"), keys: keys, argv: argv
+    end
 
   end
 end
