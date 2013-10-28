@@ -9,6 +9,7 @@ module ActiveRedis
 
     include ActiveRedis::ConnectionExt::FindersLayer
     include ActiveRedis::ConnectionExt::PersistenceLayer
+    include ActiveRedis::ConnectionExt::ScriptsLayer
 
     calculations ActiveRedis::Constants::CALCULATION_METHODS
 

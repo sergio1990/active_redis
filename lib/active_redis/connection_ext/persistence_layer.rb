@@ -8,9 +8,8 @@ module ActiveRedis::ConnectionExt
 
     def next_id(model)
       table = model.info_table_name
-      create_info_table(model) unless @adapter.exists(table)
+      create_info_table(model) unless adapter.exists(table)
       adapter.hincrby table, "next_id", 1
-      adapter.hget table, "next_id"
     end
 
     def create_info_table(model)
