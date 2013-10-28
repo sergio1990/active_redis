@@ -73,6 +73,14 @@ Article.destroy_all
 p Article.count # => 0
 ```
 
+### Associations _(from 0.0.4)_
+
+#### has_one association
+
+#### has_many association
+
+#### belongs_to association
+
 ### Finders and Calculations
 
 You may find 'row' by it's id
@@ -103,15 +111,36 @@ From version 0.0.2 you are able to search item by multiple attributes using meth
 Article.where(title: "Title article", views: 1000)
 ```
 
+### Generators
+
+In version 0.0.4 is implemented model generator
+
+```bash
+rails g active_redis:model ModelName attribute1 attribute2
+```
+
+For example:
+
+```bash
+Sergeys-MacBook-Pro-2:test_active_redis sergey$ rails g active_redis:model User name city
+  create  app/models/user.rb
+```
+
+The result is app/models/user.rb with stub content
+
+```ruby
+class User < ActiveRedis::Base
+  attributes :name, :city
+end
+```
+
 ### Future work
 
 At an early time I want to implement such features:
 
-1. Add _all_ class method
-2. Implement Association module
-3. Setting/getting attributes with it's types
-4. Relational Operators in where
-5. Scopes???
+1. Setting/getting attributes with it's types
+2. Relational Operators in where
+3. Scopes???
 
 ## Contributing
 
