@@ -28,6 +28,7 @@ module ActiveRedis
       end
 
       def define_attributes_accessors(attrs)
+        attrs = *attrs unless attrs.is_a?(Array)
         attrs.each do |attribute|
           read_attribute attribute
           write_attribute attribute
