@@ -16,12 +16,17 @@ module ActiveRedis
         end
       end
 
-      # TODO: add has_many functionality
-      def has_many
-
+      def has_many(name)
+        define_method name.to_s do
+          name.to_s.singularize.capitalize.constantize.where("#{self.class.foreign_key_name}" => self.id)
+        end
+        define_method "#{name.to_s}=" do |value|
+          value.each do |object|
+            object.send "#{self.class.foreign_key_name}=", self.id
+          end
+        end
       end
 
-      # TODO: add belongs_to functionality
       def belongs_to(name)
         define_attributes_accessors "#{name.to_s}_id"
         define_method name.to_s do
