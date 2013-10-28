@@ -6,7 +6,8 @@ module ActiveRedis
     end
 
     def attributes=(value)
-      raise ActiveRedis::InvalidArgumentError, "Value must be a Hash" unless value.is_a? Hash
+      raise ActiveRedis::InvalidArgumentError, "Value must be a Hash or Array" if !value.is_a?(Hash) && !value.is_a?(Array)
+      value = Hash[*value] if value.is_a?(Array)
       value.each { |attribute, value| self.send("#{attribute}=", value) }
     end
 

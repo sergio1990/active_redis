@@ -9,5 +9,9 @@ module ActiveRedis
       ActiveRedis.connection.fetch_where(self, params).map { |attrs| self.new(attrs) }
     end
 
+    def all
+      ActiveRedis.connection.fetch_all(self).map { |attrs| self.new(attrs) }
+    end
+
   end
 end
