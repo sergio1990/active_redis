@@ -14,6 +14,10 @@ module ActiveRedis
       "#{self.name.downcase.pluralize}:info"
     end
 
+    def foreign_key_name
+      "#{self.name.downcase}_id"
+    end
+
   end
 
 end
