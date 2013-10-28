@@ -8,7 +8,7 @@ module ActiveRedis
     module ClassMethods
 
       # TODO: add has_one functionality
-      def has_one
+      def has_one(name)
 
       end
 
