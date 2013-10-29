@@ -25,15 +25,15 @@ module ActiveRedis
     private
 
       def fill_attributes
-        self.id ||= ActiveRedis.connection.next_id(self.class)
-        self.created_at ||= Time.now.to_i
-        self.updated_at = Time.now.to_i
+        self.id         ||= ActiveRedis.connection.next_id(self.class)
+        self.created_at ||= Time.now
+        self.updated_at   = Time.now
       end
 
       def prepare_hash
         fill_attributes
-        self.class.defined_attributes.inject({}) do |hash, attribute|
-          hash[attribute] = self.send("#{attribute}"); hash
+        self.class.attributes_list.inject({}) do |hash, attribute|
+          hash[attribute.to_sym] = self.send("#{attribute}"); hash
         end
       end
 
