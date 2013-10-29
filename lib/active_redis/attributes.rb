@@ -1,3 +1,5 @@
+Dir[File.dirname(__FILE__) + '/attributes/*.rb'].each {|file| require file }
+
 module ActiveRedis
   module Attributes
 
