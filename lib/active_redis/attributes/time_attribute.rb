@@ -7,7 +7,7 @@ module ActiveRedis
       end
 
       def self.dump(value)
-        Time.to_i.to_s
+        value.to_i.to_s
       end
 
     end

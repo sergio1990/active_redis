@@ -3,7 +3,7 @@ module ActiveRedis
 
     def inspect
       string = "#<#{self.class.name}:#{self.object_id} "
-      fields = self.class.defined_attributes.map{|field| "#{field}: #{self.send(field)}"}
+      fields = self.class.attributes_list.map{|field| "#{field}: #{self.send(field)}"}
       string << fields.join(", ") << ">"
     end
 

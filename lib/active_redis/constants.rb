@@ -5,7 +5,7 @@ module ActiveRedis
 
     SAVE_SUCCESS_ANSWER = "OK"
 
-    DEFAULT_ATTRIBUTES = [:id, :created_at, :updated_at]
+    DEFAULT_ATTRIBUTES = {id: :integer, created_at: :time, updated_at: :time}
 
   end
 end
