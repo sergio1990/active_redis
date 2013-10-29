@@ -20,9 +20,11 @@ Or install it yourself as:
 
 ### Basic usage
 
+In model you may add attributes with next types: __string__, __integer__, __time__
+
 ```ruby
 class Article < ActiveRedis::Base
-  attributes :title, :link
+  attributes title: :string, link: :string
 end
 ```
 
@@ -93,7 +95,7 @@ Also gem add support for some aggregation functions like __sum__, __min__, __max
 
 ```ruby
 class Article < ActiveRedis::Base
-  attributes :link, :title, :views
+  attributes link: :string, title: :string, views: :integer
 end
 
 Article.create(views: 1000, link: "http://someblog.com/1", title: "Title article")
@@ -122,7 +124,7 @@ rails g active_redis:model ModelName attribute1 attribute2
 For example:
 
 ```bash
-Sergeys-MacBook-Pro-2:test_active_redis sergey$ rails g active_redis:model User name city
+Sergeys-MacBook-Pro-2:test_active_redis sergey$ rails g active_redis:model User name:string city:string
   create  app/models/user.rb
 ```
 
@@ -130,17 +132,9 @@ The result is app/models/user.rb with stub content
 
 ```ruby
 class User < ActiveRedis::Base
-  attributes :name, :city
+  attributes name: :string, city: :string
 end
 ```
-
-### Future work
-
-At an early time I want to implement such features:
-
-1. Setting/getting attributes with it's types
-2. Relational Operators in where
-3. Scopes???
 
 ## Contributing
 
