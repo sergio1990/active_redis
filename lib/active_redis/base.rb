@@ -4,6 +4,7 @@ require 'active_redis/persistence'
 require 'active_redis/naming'
 require 'active_redis/calculations'
 require 'active_redis/finders'
+require 'active_redis/inspector'
 
 # TODO: Add Expiring module
 
@@ -16,6 +17,7 @@ module ActiveRedis
     include Attributes
     include Associations
     include Persistence
+    include Inspector
 
   end
 end

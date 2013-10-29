@@ -28,7 +28,7 @@ module ActiveRedis
       end
 
       def belongs_to(name)
-        define_attributes_accessors "#{name.to_s}_id"
+        define_attributes_accessors "#{name.to_s}_id" => :integer
         define_method name.to_s do
           name.to_s.capitalize.constantize.find(self.send("#{name.to_s}_id"))
         end
