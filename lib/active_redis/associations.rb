@@ -10,16 +10,12 @@ module ActiveRedis
 
     module ClassMethods
 
-      def has_one(name)
-        register_association name, :has_one
-      end
-
-      def has_many(name)
-        register_association name, :has_many
-      end
-
-      def belongs_to(name)
-        register_association name, :belongs_to
+      ActiveRedis::Constants::ASSOCIATIONS.each do |assoc|
+        class_eval <<-CODE
+          def #{assoc.to_s}(name)
+            register_association name, :#{assoc.to_s}
+          end
+        CODE
       end
 
       def association(name)

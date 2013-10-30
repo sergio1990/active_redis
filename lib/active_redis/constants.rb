@@ -7,5 +7,7 @@ module ActiveRedis
 
     DEFAULT_ATTRIBUTES = {id: :integer, created_at: :time, updated_at: :time}
 
+    ASSOCIATIONS = [:has_one, :has_many, :belongs_to]
+
   end
 end
