@@ -23,7 +23,7 @@ module ActiveRedis
 
     module ClassMethods
 
-      def attributes(attrs)
+      def attributes(attrs = {})
         raise ActiveRedis::InvalidArgumentError, "Value must be a Hash!" unless attrs.is_a?(Hash)
         attrs = attrs.merge(ActiveRedis::Constants::DEFAULT_ATTRIBUTES)
         class << self; attr_accessor :defined_attributes; end

@@ -9,4 +9,7 @@ module ActiveRedis
   class InvalidArgumentError < ::StandardError
   end
 
+  class UnregisteredAssociationError < ::StandardError
+  end
+
 end
