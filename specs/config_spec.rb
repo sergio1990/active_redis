@@ -1,5 +1,4 @@
-require 'minitest/spec'
-require 'minitest/autorun'
+require File.dirname(File.realdirpath(__FILE__)) + '/test_helper.rb'
 require 'active_redis/config'
 
 describe ActiveRedis::Config do

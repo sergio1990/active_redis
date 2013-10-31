@@ -1,6 +1,5 @@
-require 'minitest/spec'
-require 'minitest/autorun'
-require 'mocha/setup'
+require File.dirname(File.realdirpath(__FILE__)) + '/test_helper.rb'
+
 require 'active_redis/inspector'
 
 class TestObject
