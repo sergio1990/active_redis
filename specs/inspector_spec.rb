@@ -11,6 +11,10 @@ describe ActiveRedis::Inspector do
 
   describe "#inspect" do
 
+    before do
+      TestObject.stubs(:attributes_list).returns []
+    end
+
     it "is shouldn't be empty" do
       subject.inspect.wont_be_empty
     end
