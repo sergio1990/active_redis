@@ -1,10 +1,5 @@
 require File.dirname(File.realdirpath(__FILE__)) + '/test_helper.rb'
-
 require 'active_redis/inspector'
-
-class TestObject
-  def self.attributes_list; []; end
-end
 
 describe ActiveRedis::Inspector do
 
