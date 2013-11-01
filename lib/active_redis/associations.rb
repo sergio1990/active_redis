@@ -1,4 +1,6 @@
 Dir[File.dirname(__FILE__) + '/associations/*.rb'].each {|file| require file }
+require 'active_redis/constants'
+require 'active_redis/errors'
 
 module ActiveRedis
   module Associations
