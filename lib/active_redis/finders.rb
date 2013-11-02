@@ -10,12 +10,12 @@ module ActiveRedis
       ids.count == 1 ? res.first : res
     end
 
-    def where(params)
+    def where(params = {})
       ActiveRedis.connection.fetch_where(self, params).map { |attrs| self.new(attrs) }
     end
 
     def all
-      ActiveRedis.connection.fetch_all(self).map { |attrs| self.new(attrs) }
+      where
     end
 
   end
