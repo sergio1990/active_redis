@@ -3,11 +3,11 @@ module ActiveRedis
     class StringAttribute < Attribute
 
       def self.load(value)
-        value.to_s
+        value.nil? || value.empty? ? nil : value.to_s
       end
 
       def self.dump(value)
-        value.to_s
+        value ? value.to_s : nil
       end
 
     end

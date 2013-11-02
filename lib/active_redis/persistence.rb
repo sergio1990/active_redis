@@ -40,7 +40,7 @@ module ActiveRedis
       def prepare_hash
         fill_attributes
         self.class.attributes_list.inject({}) do |hash, attribute|
-          hash[attribute.to_sym] = self.send("#{attribute}"); hash
+          hash[attribute.to_sym] = self.instance_variable_get("@#{attribute}"); hash
         end
       end
 

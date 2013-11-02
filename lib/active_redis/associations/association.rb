@@ -26,10 +26,7 @@ module ActiveRedis
       def define_write_association
         @target.class_eval <<-CODE
           def #{@name}=(value)
-            self.class.association(:#{@name}).tap do |a|
-              a.write(self, value)
-              a.reload(self)
-            end
+            @assoc_#{@name} = value
           end
         CODE
       end

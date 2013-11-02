@@ -11,6 +11,13 @@ module ActiveRedis
         value.send "#{@target.foreign_key_name}=", object.id
       end
 
+      def save(object)
+        value = object.send :instance_variable_get, "@assoc_#{@name}"
+        return unless value
+        write object, value
+        value.save
+      end
+
     end
 
   end
