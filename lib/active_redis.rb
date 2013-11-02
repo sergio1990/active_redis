@@ -21,4 +21,13 @@ module ActiveRedis
   def self.connection=(value)
     @connection = value
   end
+
+  def self.log
+    raise ActiveRedis::NoLogError, "Connection not provided!" unless @log
+    @log
+  end
+
+  def self.log=(value)
+    @log = value
+  end
 end

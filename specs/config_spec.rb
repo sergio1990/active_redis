@@ -7,6 +7,7 @@ describe ActiveRedis::Config do
 
   let(:options) { :connection_options }
   let(:adapter) { :adapter }
+  let(:log) { :log }
 
   it "is has connection_options attribute" do
     subject.connection_options = options
@@ -16,6 +17,11 @@ describe ActiveRedis::Config do
   it "is has adapter attribute" do
     subject.adapter = adapter
     subject.adapter.must_be_same_as adapter
+  end
+
+  it "is has log attribute" do
+    subject.log = log
+    subject.log.must_be_same_as log
   end
 
 end

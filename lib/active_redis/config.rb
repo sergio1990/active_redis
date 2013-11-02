@@ -11,4 +11,7 @@ class ActiveRedis::Config
   # By default it's ActiveRedis::Adapters::BasicAdapter
   attr_accessor :adapter
 
+  # Specify log
+  # By default it's ActiveRedis::Logs::ConsoleLog
+  attr_accessor :log
 end
