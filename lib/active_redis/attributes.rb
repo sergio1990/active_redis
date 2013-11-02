@@ -46,15 +46,16 @@ module ActiveRedis
       private
 
       def register_attribute(attribute, type)
-        return if self.defined_attributes.has_key? attribute.to_sym
+        return false if self.defined_attributes.has_key? attribute.to_sym
         self.defined_attributes[attribute.to_sym] = {
           class: "ActiveRedis::Attributes::#{type.to_s.capitalize}Attribute".constantize,
           type: type
         }
+        true
       end
 
       def attribute_class(attribute)
-        attr_class = self.defined_attributes[attribute.to_sym][:class]
+        self.defined_attributes[attribute.to_sym][:class]
       end
 
       def read_attribute(attribute)
