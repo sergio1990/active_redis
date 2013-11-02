@@ -29,6 +29,10 @@ module ActiveRedis
       true
     end
 
+    def touch
+      save
+    end
+
     private
 
       def fill_attributes

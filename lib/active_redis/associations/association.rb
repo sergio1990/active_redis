@@ -3,7 +3,7 @@ module ActiveRedis
 
     class Association
 
-      def initialize(name, target)
+      def initialize(name, target, options = {})
         @name, @target = name, target
         define_read_association
         define_write_association
