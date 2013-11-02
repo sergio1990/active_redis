@@ -22,6 +22,13 @@ module ActiveRedis
       self.save
     end
 
+    def reload
+      if self.class.respond_to? :associations
+        self.class.associations.each { |key, assoc| assoc.reload(self) }
+      end
+      true
+    end
+
     private
 
       def fill_attributes

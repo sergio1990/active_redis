@@ -9,12 +9,16 @@ module ActiveRedis
         define_write_association
       end
 
+      def reload(object)
+        object.send :instance_variable_set, "@assoc_#{@name}", nil
+      end
+
       private
 
       def define_read_association
         @target.class_eval <<-CODE
           def #{@name}
-            self.class.association(:#{@name}).read(self)
+            @assoc_#{@name} ||= self.class.association(:#{@name}).read(self)
           end
         CODE
       end
@@ -22,7 +26,10 @@ module ActiveRedis
       def define_write_association
         @target.class_eval <<-CODE
           def #{@name}=(value)
-            self.class.association(:#{@name}).write(self, value)
+            self.class.association(:#{@name}).tap do |a|
+              a.write(self, value)
+              a.reload(self)
+            end
           end
         CODE
       end

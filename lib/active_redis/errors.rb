@@ -3,6 +3,9 @@ module ActiveRedis
   class NoConnectionError < ::StandardError
   end
 
+  class NoLogError < ::StandardError
+  end
+
   class NotSpecifiedIdError < ::StandardError
   end
 
