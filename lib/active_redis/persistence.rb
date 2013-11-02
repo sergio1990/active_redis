@@ -22,6 +22,13 @@ module ActiveRedis
       self.save
     end
 
+    def reload
+      if self.class.respond_to? :associations
+        self.class.associations.each { |key, assoc| assoc.reload(self) }
+      end
+      true
+    end
+
     private
 
       def fill_attributes
@@ -33,7 +40,7 @@ module ActiveRedis
       def prepare_hash
         fill_attributes
         self.class.attributes_list.inject({}) do |hash, attribute|
-          hash[attribute.to_sym] = self.send("#{attribute}"); hash
+          hash[attribute.to_sym] = self.instance_variable_get("@#{attribute}"); hash
         end
       end
 

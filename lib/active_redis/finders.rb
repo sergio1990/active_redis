@@ -4,7 +4,7 @@ module ActiveRedis
     def find(*ids)
       res = ids.inject([]) do |result, id|
         attrs = ActiveRedis.connection.fetch_row(self, id)
-        result << self.new(attrs) if attrs.any?
+        result << self.new(attrs) if attrs && attrs.any?
         result
       end
       ids.count == 1 ? res.first : res

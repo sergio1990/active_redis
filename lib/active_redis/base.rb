@@ -15,8 +15,8 @@ module ActiveRedis
     extend Finders
 
     include Attributes
-    include Associations
     include Persistence
+    include Associations
     include Inspector
 
   end

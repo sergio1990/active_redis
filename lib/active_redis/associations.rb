@@ -8,6 +8,12 @@ module ActiveRedis
     def self.included(base)
       base.extend ClassMethods
       class << base; attr_accessor :associations; end
+      base.send :alias_method_chain, :save, :associations
+    end
+
+    def save_with_associations
+      self.class.associations.each { |key, a| a.save(self) }
+      save_without_associations
     end
 
     module ClassMethods

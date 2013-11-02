@@ -68,7 +68,7 @@ module ActiveRedis
       def write_attribute(attribute)
         define_method "#{attribute}=" do |value|
           klass = self.class.send :attribute_class, attribute
-          klass.dump(instance_variable_set("@#{attribute}", value))
+          instance_variable_set("@#{attribute}", klass.dump(value))
         end
       end
 
