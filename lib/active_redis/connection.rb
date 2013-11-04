@@ -19,6 +19,10 @@ module ActiveRedis
 
     attr_accessor :adapter
 
+    def run_query_analyzer(model, options = ["", "", ""])
+      adapter.eval query_analyzer_script, keys: [model.key_name, Time.now.to_i], argv: options
+    end
+
     private
 
     def run_eval(type, keys = [], argv = [])

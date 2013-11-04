@@ -20,6 +20,13 @@ module ActiveRedis
         LUA
       end
 
+      def query_analyzer_script
+        <<-LUA
+          #{LuaLoader.get_main}
+          return query_analyzer(KEYS, ARGV)
+        LUA
+      end
+
       class LuaLoader
 
         def self.get_main
