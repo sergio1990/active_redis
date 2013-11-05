@@ -1,5 +1,6 @@
 module ActiveRedis
   module QueryIterator
+    include Enumerable
 
     def method_missing(method, *args)
       unless linked_objects.is_a? Array
@@ -20,16 +21,6 @@ module ActiveRedis
     def each(&block)
       raise "Exception occured when trying call #each on #{@target}" unless linked_objects.is_a? Array
       linked_objects.each(&block)
-    end
-
-    def map(&block)
-      raise "Exception occured when trying call #map on #{@target}" unless linked_objects.is_a? Array
-      linked_objects.map(&block)
-    end
-
-    def [](index)
-      raise "Exception occured when trying call #[] on #{@target}" unless linked_objects.is_a? Array
-      linked_objects[index]
     end
 
   end
