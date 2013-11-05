@@ -1,10 +1,12 @@
 require 'active_redis/relation'
+require 'active_redis/query_iterator'
 
 module ActiveRedis
   autoload :QueryExecutor, 'active_redis/query_executor'
 
   class QueryChainer
     include Relation
+    include QueryIterator
 
     def initialize(target)
       @where_options = {}
@@ -36,19 +38,15 @@ module ActiveRedis
       self
     end
 
-    def inspect
-      if object.is_a? Array
-        "[#{object.map{|e| e.inspect}.join(', ')}]"
-      else
-        object.inspect
-      end
+    def reload
+      @collection = nil
+    end
+
+    def linked_objects
+      @collection ||= objects_by_query
     end
 
     private
-
-    def object
-      @object ||= objects_by_query
-    end
 
     def execute_query
       QueryExecutor.execute(@target, @where_options, @order_options, @limit_options)
