@@ -15,5 +15,10 @@ module ActiveRedis::ConnectionExt
       run_eval :where, [model.key_name], params.flatten
     end
 
+    def run_query_analyzer(model, params = ["", "", ""])
+      ActiveRedis.log.write "Calling ActiveRedis::ConnectionExt::FindersLayer::run_query_analyzer(#{model.name}, #{params})"
+      run_eval :query_analyzer, [model.key_name, Time.now.to_i], params
+    end
+
   end
 end

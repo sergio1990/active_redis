@@ -1,3 +1,28 @@
+-- Split string by pattern
+--
+-- pString  - input string
+-- pPattern - pattern for splitting
+--
+-- returns: array of string's parts
+local split = function (pString, pPattern)
+   local Table = {}  -- NOTE: use {n = 0} in Lua-5.0
+   local fpat = "(.-)" .. pPattern
+   local last_end = 1
+   local s, e, cap = pString:find(fpat, 1)
+   while s do
+      if s ~= 1 or cap ~= "" then
+        table.insert(Table,cap)
+      end
+      last_end = e+1
+      s, e, cap = pString:find(fpat, last_end)
+   end
+   if last_end <= #pString then
+      cap = pString:sub(last_end)
+      table.insert(Table, cap)
+   end
+   return Table
+end
+
 -- Fetching keys by pattern
 --
 -- k - pattern for searching
@@ -31,9 +56,10 @@ end
 -- return: array
 local fetch_conditions = function(str)
   local t = {}
-  for k, v in string.gmatch(str, "(%w+)=(%w+)") do
-    table.insert(t, k)
-    table.insert(t, v)
+  for i, value in pairs(split(str, ",")) do
+    local res = split(value, "=")
+    table.insert(t, res[1])
+    table.insert(t, res[2])
   end
   return t
 end

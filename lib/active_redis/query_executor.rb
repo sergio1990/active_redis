@@ -8,7 +8,7 @@ module ActiveRedis
     private
 
     def self.prepare_where(where)
-      where.keys.map{|key| "#{key}=#{where[key]}" }.join(", ")
+      where.keys.map{|key| "#{key}=#{where[key]}" }.join(",")
     end
 
     def self.prepare_order(order)
