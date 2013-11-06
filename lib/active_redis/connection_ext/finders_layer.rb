@@ -1,7 +1,12 @@
-require 'benchmark'
+require 'active_redis/logs/query_logger'
 
 module ActiveRedis::ConnectionExt
   module FindersLayer
+
+    def self.included(base)
+      base.send :extend, ActiveRedis::Logs::QueryLogger
+      base.loggable :run_query_analyzer
+    end
 
     def fetch_row(model, id)
       fetch_where(model, id: id).first
@@ -18,12 +23,7 @@ module ActiveRedis::ConnectionExt
     end
 
     def run_query_analyzer(model, params = ["", "", ""])
-      res = nil
-      time = Benchmark.realtime do
-        res = run_eval :query_analyzer, [model.key_name, Time.now.to_i], params
-      end
-      ActiveRedis.log.write "Redis Query (#{(time*1000).round(2)}) => run_query_analyzer(#{model.name}, #{params})"
-      res
+      run_eval :query_analyzer, [model.key_name, Time.now.to_i], params
     end
 
   end
