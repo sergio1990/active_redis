@@ -11,6 +11,10 @@ module ActiveRedis
   end
 end
 
+TestObject.class_eval do
+  def save;end
+end
+
 describe ActiveRedis::Associations do
 
   subject { TestObject.new }
@@ -62,7 +66,7 @@ describe ActiveRedis::Associations do
       describe "##{assoc}" do
 
         it "is register #{assoc} association with name" do
-          TestObject.expects(:register_association).with(:object, assoc.to_sym).returns true
+          TestObject.expects(:register_association).with(:object, assoc.to_sym, {}).returns true
           TestObject.send assoc, :object
         end
 
@@ -76,8 +80,8 @@ describe ActiveRedis::Associations do
         let(:assoc) { mock() }
 
         it "is create certain class by assoc name" do
-          ActiveRedis::Associations::SomeAssociation.expects(:new).with(:object, TestObject).returns assoc
-          TestObject.send :register_association, :object, :some
+          ActiveRedis::Associations::SomeAssociation.expects(:new).with(:object, TestObject, {}).returns assoc
+          TestObject.send :register_association, :object, :some, {}
           TestObject.associations.must_be :has_key?, :object
         end
 

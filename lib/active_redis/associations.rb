@@ -33,7 +33,7 @@ module ActiveRedis
 
       private
 
-      def register_association(name, type, options = {})
+      def register_association(name, type, options)
         self.associations ||= {}
         self.associations[name.to_sym] = "ActiveRedis::Associations::#{type.to_s.classify}Association".constantize.new(name, self, options)
       end
