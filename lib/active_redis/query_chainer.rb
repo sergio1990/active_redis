@@ -13,7 +13,6 @@ module ActiveRedis
       @order_options = {id: :asc}
       @limit_options = {per_page: 10, page: 0}
       @target = target
-      @first = false
     end
 
     def apply_where(options)
@@ -27,15 +26,12 @@ module ActiveRedis
     end
 
     def apply_limit(options)
-      @limit_options = options
-      @first = false
+      @limit_options = options if options.any?
       self
     end
 
-    def apply_first(options)
-      @limit_options = {per_page: 1, page: 0}
-      @first = true
-      self
+    def apply_top(options)
+      apply_limit per_page: 1, page: 0
     end
 
     def reload
@@ -53,8 +49,12 @@ module ActiveRedis
     end
 
     def objects_by_query
-      res = execute_query.map { |attrs| @target.new(attrs) }
-      @first ? res.first : res
+      res = execute_query.inject([]) { |arr, attrs| arr << @target.new(attrs) if attrs && attrs.any?; arr }
+      top_limit? ? res.first : res
+    end
+
+    def top_limit?
+      @limit_options[:per_page] == 1 && @limit_options[:page] == 0
     end
 
   end

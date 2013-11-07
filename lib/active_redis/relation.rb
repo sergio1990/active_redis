@@ -2,7 +2,7 @@ module ActiveRedis
   autoload :QueryChainer,   'active_redis/query_chainer'
   module Relation
 
-    %w{where order limit first}.each do |method|
+    %w{where order limit top}.each do |method|
       class_eval <<-CODE
         def #{method}(options = {})
           if self.class.name == "ActiveRedis::QueryChainer"

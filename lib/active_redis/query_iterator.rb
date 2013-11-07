@@ -4,7 +4,7 @@ module ActiveRedis
 
     def method_missing(method, *args)
       unless linked_objects.is_a? Array
-        linked_objects.send method
+        linked_objects.send method, *args
       else
         super
       end
