@@ -4,7 +4,7 @@ module ActiveRedis
     class HasOneAssociation < Association
 
       def read(object)
-        @name.to_s.capitalize.constantize.where("#{@target.foreign_key_name}" => object.id).first
+        @name.to_s.capitalize.constantize.where("#{@target.foreign_key_name}" => object.id).top
       end
 
       def write(object, value)

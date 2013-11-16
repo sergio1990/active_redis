@@ -12,7 +12,7 @@ module ActiveRedis
       end
 
       def read(object)
-        @name.to_s.capitalize.constantize.find(object.send("#{@name.to_s}_id"))
+        @name.to_s.capitalize.constantize.where(id: object.send("#{@name.to_s}_id")).top
       end
 
       def write(object, value)
