@@ -3,13 +3,16 @@ module ActiveRedis
 
     class BelongsToAssociation < Association
 
-      def initialize(name, target)
-        super(name, target)
+      DEFAULT_OPTIONS = {touch: false}
+
+      def initialize(name, target, options = {})
+        super
+        @options ||= DEFAULT_OPTIONS.merge(options)
         target.define_attributes_accessors("#{@name.to_s}_id" => :integer)
       end
 
       def read(object)
-        @name.to_s.capitalize.constantize.find(object.send("#{@name.to_s}_id"))
+        @name.to_s.capitalize.constantize.where(id: object.send("#{@name.to_s}_id")).top
       end
 
       def write(object, value)
@@ -20,6 +23,7 @@ module ActiveRedis
         value = object.send :instance_variable_get, "@assoc_#{@name}"
         return unless value
         write(object, value)
+        value.touch if @options[:touch]
       end
 
     end

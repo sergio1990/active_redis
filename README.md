@@ -83,7 +83,7 @@ p Article.count # => 0
 
 #### belongs_to association
 
-### Finders and Calculations
+### Finders
 
 You may find 'row' by it's id
 
@@ -101,10 +101,6 @@ end
 Article.create(views: 1000, link: "http://someblog.com/1", title: "Title article")
 Article.create(views: 3000, link: "http://someblog.com/2", title: "Title article")
 
-Article.sum(:views)    # => 4000
-Article.min(:views)    # => 1000
-Article.max(:views)    # => 3000
-Article.pluck(:id)     # => ["1", "2"]
 ```
 
 From version 0.0.2 you are able to search item by multiple attributes using method __where__
@@ -134,6 +130,14 @@ The result is app/models/user.rb with stub content
 class User < ActiveRedis::Base
   attributes name: :string, city: :string
 end
+```
+
+## NEW IN VERSION 0.0.7
+
+Method chaining. Now you may calling __where__, __order__, __limit__ something like this:
+
+```ruby
+Article.where(title: "Article title").where(views: 1000).order(title: :asc).limit(per_page: 20, page: 3)
 ```
 
 ## Contributing

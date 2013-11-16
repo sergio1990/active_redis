@@ -20,8 +20,8 @@ module ActiveRedis
 
       ActiveRedis::Constants::ASSOCIATIONS.each do |assoc|
         class_eval <<-CODE
-          def #{assoc.to_s}(name)
-            register_association name, :#{assoc.to_s}
+          def #{assoc.to_s}(name, options = {})
+            register_association name, :#{assoc.to_s}, options
           end
         CODE
       end
@@ -33,9 +33,9 @@ module ActiveRedis
 
       private
 
-      def register_association(name, type)
+      def register_association(name, type, options)
         self.associations ||= {}
-        self.associations[name.to_sym] = "ActiveRedis::Associations::#{type.to_s.classify}Association".constantize.new(name, self)
+        self.associations[name.to_sym] = "ActiveRedis::Associations::#{type.to_s.classify}Association".constantize.new(name, self, options)
       end
 
     end
