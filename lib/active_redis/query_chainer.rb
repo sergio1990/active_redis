@@ -26,12 +26,16 @@ module ActiveRedis
     end
 
     def apply_limit(options)
-      @limit_options = options if options.any?
+      @limit_options = options
       self
     end
 
     def apply_top(options)
       apply_limit per_page: 1, page: 0
+    end
+
+    def apply_all(options)
+      apply_limit Hash.new
     end
 
     def reload
