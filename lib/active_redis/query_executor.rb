@@ -2,15 +2,14 @@ module ActiveRedis
   class QueryExecutor
 
     def self.execute(chainer)
-      ActiveRedis.connection.run_query_analyzer(chainer.target, [
-        prepare_where(chainer.where_options),
-        prepare_order(chainer.order_options),
-        prepare_limit(chainer.limit_options),
-        prepare_aggregation(chainer.aggregation_options)
-      ])
+      ActiveRedis.connection.run_query_analyzer(chainer.target, prepare_params(chainer))
     end
 
     private
+
+    def self.prepare_params(chainer)
+      [prepare_where(chainer.where_options), prepare_order(chainer.order_options), prepare_limit(chainer.limit_options), prepare_aggregation(chainer.aggregation_options)]
+    end
 
     def self.prepare_where(where)
       where.keys.map{|key| "#{key}=#{where[key]}" }.join(",")
