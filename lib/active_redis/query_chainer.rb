@@ -14,7 +14,7 @@ module ActiveRedis
     def initialize(target)
       @where_options = {}
       @order_options = {id: :asc}
-      @limit_options = {per_page: 10, page: 0}
+      @limit_options = {}
       @aggregation_options = {}
       @target = target
     end
@@ -34,7 +34,7 @@ module ActiveRedis
       self
     end
 
-    def apply_top(options)
+    def apply_first(options)
       apply_limit per_page: 1, page: 0
     end
 

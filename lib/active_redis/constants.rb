@@ -9,5 +9,9 @@ module ActiveRedis
 
     ASSOCIATIONS = [:has_one, :has_many, :belongs_to]
 
+    RELATION_METHODS = %w{where order limit first all}
+
+    QUERY_METHODS = CALCULATION_METHODS + RELATION_METHODS
+
   end
 end
