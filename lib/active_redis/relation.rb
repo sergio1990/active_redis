@@ -1,8 +1,10 @@
+require 'active_redis/constants'
+
 module ActiveRedis
   autoload :QueryChainer,   'active_redis/query_chainer'
   module Relation
 
-    %w{where order limit top all}.each do |method|
+    %w{where order limit top all}.concat(ActiveRedis::Constants::CALCULATION_METHODS).each do |method|
       class_eval <<-CODE
         def #{method}(options = {})
           if self.class.name == "ActiveRedis::QueryChainer"

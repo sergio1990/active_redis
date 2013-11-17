@@ -1,5 +1,6 @@
 require 'active_redis/relation'
 require 'active_redis/query_iterator'
+require 'active_redis/constants'
 
 module ActiveRedis
   autoload :QueryExecutor, 'active_redis/query_executor'
@@ -8,10 +9,13 @@ module ActiveRedis
     include Relation
     include QueryIterator
 
+    attr_reader :where_options, :order_options, :limit_options, :aggregation_options, :target
+
     def initialize(target)
       @where_options = {}
       @order_options = {id: :asc}
       @limit_options = {per_page: 10, page: 0}
+      @aggregation_options = {}
       @target = target
     end
 
@@ -38,6 +42,13 @@ module ActiveRedis
       apply_limit Hash.new
     end
 
+    ActiveRedis::Constants::CALCULATION_METHODS.each do |method|
+      define_method "apply_#{method}" do |field|
+        apply_aggregation(method, field)
+      end
+    end
+
+
     def reload
       @collection = nil
     end
@@ -48,8 +59,13 @@ module ActiveRedis
 
     private
 
+    def apply_aggregation(type, field)
+      @aggregation_options = {type => field}
+      execute_query
+    end
+
     def execute_query
-      QueryExecutor.execute(@target, @where_options, @order_options, @limit_options)
+      QueryExecutor.execute self
     end
 
     def objects_by_query
