@@ -140,6 +140,10 @@ Method chaining. Now you may calling __where__, __order__, __limit__ something l
 Article.where(title: "Article title").where(views: 1000).order(title: :asc).limit(per_page: 20, page: 3)
 ```
 
+## NEW IN VERSION 0.0.8
+
+Using aggregation functions with method chaining functional.
+
 ## Contributing
 
 1. Fork it
