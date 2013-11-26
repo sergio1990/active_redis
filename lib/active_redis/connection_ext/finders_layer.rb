@@ -22,7 +22,7 @@ module ActiveRedis::ConnectionExt
       run_eval :where, [model.key_name], params.flatten
     end
 
-    def run_query_analyzer(model, params = ["", "", ""])
+    def run_query_analyzer(model, params = ["", "", "", ""])
       run_eval :query_analyzer, [model.key_name, Time.now.to_i], params
     end
 

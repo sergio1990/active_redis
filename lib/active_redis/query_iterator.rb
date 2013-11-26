@@ -1,6 +1,5 @@
 module ActiveRedis
   module QueryIterator
-    include Enumerable
 
     def method_missing(method, *args)
       unless linked_objects.is_a? Array
