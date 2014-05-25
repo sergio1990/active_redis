@@ -25,6 +25,15 @@ module ActiveRedis::ConnectionExt
       destroy_by_keys fetch_keys(model)
     end
 
+    def expire_record(model, id, seconds = -1)
+      raise ActiveRedis::NotSpecifiedIdError, "Must specified ID for destroy record!" unless id
+      if seconds > 0
+        adapter.expire model.table_name(id), seconds
+      else
+        adapter.persist model.table_name(id)
+      end
+    end
+
     private
     def destroy_by_keys(keys)
       adapter.del keys
