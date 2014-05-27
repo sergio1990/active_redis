@@ -33,6 +33,14 @@ module ActiveRedis
       save
     end
 
+    def expire(seconds)
+      ActiveRedis.connection.expire_record self.class, self.id, seconds
+    end
+
+    def clear_expire
+      expire -1
+    end
+
     private
 
       def fill_attributes
