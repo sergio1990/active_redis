@@ -18,9 +18,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "redis"
-  spec.add_dependency "activesupport"
-  spec.add_dependency "colorize"
+  spec.add_dependency "redis",         '3.0.7'
+  spec.add_dependency "activesupport", '>= 3.0.0'
+  spec.add_dependency "colorize",      '0.7.3'
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

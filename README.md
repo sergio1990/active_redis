@@ -6,7 +6,7 @@ Small childly ORM for Redis
 
 Add this line to your application's Gemfile:
 
-    gem 'active_redis'
+    gem 'active_redis', '0.0.9'
 
 And then execute:
 
