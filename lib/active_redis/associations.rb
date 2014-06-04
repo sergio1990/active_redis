@@ -12,7 +12,7 @@ module ActiveRedis
     end
 
     def save_with_associations
-      self.class.associations.each { |key, a| a.save(self) }
+      self.class.associations.each { |key, a| a.save(self) } if self.class.associations
       save_without_associations
     end
 
